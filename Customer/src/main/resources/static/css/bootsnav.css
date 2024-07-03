@@ -152,10 +152,6 @@ nav.bootsnav.navbar-full .navbar-collapse .nav-full::-ms-scrollbar {
     width: 0;
 }
 
-nav.bootsnav.navbar-full .navbar-collapse .nav-full::-o-scrollbar {
-    width: 0;
-}
-
 
 nav.bootsnav.navbar-full .navbar-collapse ul.nav{
     display: block;

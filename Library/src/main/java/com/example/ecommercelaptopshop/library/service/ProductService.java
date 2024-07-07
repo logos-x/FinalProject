@@ -31,10 +31,8 @@ public class ProductService {
         return transferData(productRepository.getAllProduct());
     }
 
-    public List<ProductDto> allProduct() {
-        List<Product> products = productRepository.findAll();
-        List<ProductDto> productDtos = transferData(products);
-        return productDtos;
+    public List<Product> allProduct() {
+        return productRepository.findAll();
     }
 
 
@@ -109,11 +107,11 @@ public class ProductService {
         return dtoPage;
     }
 
-    public Page<ProductDto> getAllProducts(int pageNo) {
+    public Page<Product> getAllProducts(int pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 6);
-        List<ProductDto> productDtoLists = this.allProduct();
-        Page<ProductDto> productDtoPage = toPage(productDtoLists, pageable);
-        return productDtoPage;
+        List<Product> productLists = this.allProduct();
+        Page<Product> productPage = toPage(productLists, pageable);
+        return productPage;
     }
 
     public Page<ProductDto> getAllProductsForCustomer(int pageNo) {

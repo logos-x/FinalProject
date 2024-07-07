@@ -39,10 +39,12 @@ public class ProductController {
     private ProductImageService imageService;
 
 
-    @GetMapping("/menu")
+    @GetMapping()
     public String allProduct(Model model) {
-        model.addAttribute("title", "Hello Admin");
-        return "hello";
+        List<Product> products = productService.allProduct();
+        model.addAttribute("products", products);
+        model.addAttribute("brands", brandService.findAllByActivatedTrue());
+        return "admin/products-list";
     }
 
     @GetMapping("/newProduct")
@@ -58,7 +60,7 @@ public class ProductController {
 
     @PostMapping("/newProduct")
     public String saveProduct(@ModelAttribute("product") Product product,
-                              @RequestParam("thumbnail") MultipartFile imageFile,
+                              @RequestParam("image") MultipartFile imageFile,
                               @RequestParam("anotherImage") MultipartFile[] anotherImage,
                               BindingResult result, Model model) {
         if (result.hasErrors()) {

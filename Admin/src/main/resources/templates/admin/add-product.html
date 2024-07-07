@@ -48,17 +48,13 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Product Images</h5>
-                            <div class="mb-3">
-                                <label class="form-label" for="thumbnail">Product Image</label>
-                                <div class="border p-3 text-center">
-                                    <input type="file" id="thumbnail" name="thumbnail">
-                                </div>
+                            <div class="col-6 mb-3">
+                                <label for="image" class="form-label">Hình ảnh sản phẩm:</label>
+                                <input type="file" id="image" name="image" class="form-control" required="false"/>
                             </div>
-                            <div>
-                                <label class="form-label" for="images">Product Gallery</label>
-                                <div class="border p-3 text-center">
-                                    <input type="file" name="anotherImage" accept="image/*" id="images" multiple>
-                                </div>
+                            <div class="col-6 mb-3">
+                                <label class="form-label" for="anotherImage">Hình ảnh khác:</label>
+                                <input class="form-control" type="file" name="anotherImage" accept="image/*" id="anotherImage" multiple>
                             </div>
                         </div>
                     </div>

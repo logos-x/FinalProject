@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:fragment="link-fontawesome" src="https://kit.fontawesome.com/7994a6a9a6.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<header th:fragment="header">
+    <nav class="navbar navbar-expand-lg bg-light navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbar SupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/static">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-black active" aria-current="page" href="/products">Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/products/new}" class="nav-link text-black">Add New Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/categories/new}" class="nav-link text-black">Add New Category</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li>
+                        <a class="nav-link active" href="/cart">
+                            <i class="fa-solid fa-cart-shopping fa-2x"></i></a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">
+                        <span class="navbar-text">
+                            Xin chào,
+                            <span sec:authentication="principal.attributes['name']" style="margin-right:20px;"></span>
+                        </span>
+                    </li>
+                    <li sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <button class="btn btn-outline-primary" type="submit">Đăng xuất</button>
+                        </form>
+                    </li>
+                    <li sec:authorize="!isAuthenticated()">
+                        <a href="/login" class="btn btn-outline-primary">Đăng nhập</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div th:insert="~{::${content}}">
+    <!-- NỘI DUNG TRANG CON--->
+</div>
+<footer th:fragment="footer">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</footer>
+</body>
+</html>

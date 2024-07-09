@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
+
+
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<!-- Registration 2 - Bootstrap Brain Component -->
+<div class="bg-light py-3 py-md-5">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
+                <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-5">
+                                <h2 class="h3">Registration</h2>
+                                <h3 class="fs-6 fw-normal text-secondary m-0">Enter your details to register</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <form th:action="@{/register}" th:object="${user}" method="post">
+                        <div class="row gy-3 gy-md-4 overflow-hidden">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Họ và tên:</label><span class="text-danger"> *</span>
+                                <input type="text" class="form-control" th:field="*{name}" id="name">
+                                <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email:</label>
+                                <input type="email" class="form-control" th:field="*{email}" id="email">
+                                <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Tên đăng nhập:</label><span class="text-danger"> *</span>
+                                <input type="text" class="form-control" th:field="*{username}" id="username">
+                                <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Mật khẩu:</label><span class="text-danger"> *</span>
+                                <input type="password" class="form-control" th:field="*{password}" id="password" >
+                                <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button class="btn btn-lg btn-primary" type="submit">Sign up</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-12">
+                            <hr class="mt-5 mb-4 border-secondary-subtle">
+                            <div class="col-12">
+                                <p class="m-0 text-secondary text-center">Already have an account? <a href="/login" class="link-primary text-decoration-none">Sign in</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+</html>

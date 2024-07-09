@@ -1,58 +1,248 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <th:block th:replace="layout::link-css"></th:block>
+    <title>Add Product</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #f87d7d 0%, #8effd9 100%);
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+
+        .floating-circles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 0, 150, 0.2), rgba(2, 190, 239, 0.2));
+            animation: move 10s linear infinite, scale 5s ease-in-out infinite;
+            mix-blend-mode: overlay;
+        }
+
+        .circle:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            top: -50px;
+            left: 50px;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(2) {
+            width: 700px;
+            height: 700px;
+            top: -100px;
+            right: 100px;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(3) {
+            width: 600px;
+            height: 600px;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: 4s;
+        }
+
+        .circle:nth-child(4) {
+            width: 800px;
+            height: 800px;
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 6s;
+        }
+
+        .circle:nth-child(5) {
+            width: 400px;
+            height: 400px;
+            top: 200px;
+            left: 200px;
+            animation-delay: 8s;
+        }
+
+        .circle:nth-child(6) {
+            width: 900px;
+            height: 900px;
+            bottom: 250px;
+            right: 250px;
+            animation-delay: 10s;
+        }
+
+        .circle:nth-child(7) {
+            width: 700px;
+            height: 700px;
+            top: 300px;
+            left: 300px;
+            animation-delay: 12s;
+        }
+
+        .circle:nth-child(8) {
+            width: 1100px;
+            height: 1100px;
+            bottom: 350px;
+            right: 350px;
+            animation-delay: 14s;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(-20px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+
+        @keyframes scale {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .form-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 55px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 1000px;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #333333;
+        }
+
+        .form-control {
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.26);
+
+        }
+
+        .btn-primary {
+            background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+            border: none;
+            border-radius: 25px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(120deg, #66a6ff 0%, #89f7fe 100%);
+        }
+
+        .text-danger {
+            font-size: 0.875em;
+        }
+
+        .card {
+            margin-bottom: 15px;
+            border: 1px solid #0099ff;
+            border-radius: 25px;
+        }
+
+        .card-body h5 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+
+        .form-select {
+
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.26);
+            padding: 10px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-select:focus {
+            border-color: #ff9f43;
+            box-shadow: 0 0 5px rgba(255, 159, 67, 0.5);
+        }
+
+        .form-select option {
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
+<div class="floating-circles">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+</div>
 <th:block th:replace="layout::header"></th:block>
-<div class="container mt-4">
-    <h1 th:text="${title}"></h1>
-    <form th:action="@{/admin/products/newProduct}" th:object="${product}" method="post" enctype="multipart/form-data" >
+<div class="container mt-4 form-container">
+    <h1 class="text-center mb-4" th:text="${title}">Add Product</h1>
+    <form th:action="@{/admin/products/newProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
         <div class="row">
-            <div class="row">
-                <div class="col-9 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Title</h5>
-                            <input type="text" class="form-control" placeholder="Enter product title" th:field="*{name}">
-                            <h5 class="card-title">Product Description</h5>
-                            <textarea class="form-control" rows="5" placeholder="Enter product description" th:field="*{description}"></textarea>
-                        </div>
+            <div class="col-md-8 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Product Title</h5>
+                        <input type="text" class="form-control" placeholder="Enter product title" th:field="*{name}">
+                        <h5 class="card-title">Product Description</h5>
+                        <textarea class="form-control" rows="4" placeholder="Enter product description" th:field="*{description}"></textarea>
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Brand & Category</h5>
-                            <div class="mb-3">
-                                <label class="form-label">Select product brand</label>
-                                <select class="form-select" id="brandSelect">
-                                    <option value="">-- Chọn hãng máy --</option>
-                                    <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Select product category</label>
-                                <select class="form-select" th:field="*{category.id}" id="categorySelect">
-                                    <option value="">-- Chọn loại máy --</option>
-                                </select>
-                            </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Product Brand & Category</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Select product brand</label>
+                            <select class="form-select" id="brandSelect">
+                                <option value="">-- Chọn hãng máy --</option>
+                                <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.name}"></option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Select product category</label>
+                            <select class="form-select" th:field="*{category.id}" id="categorySelect">
+                                <option value="">-- Chọn loại máy --</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Images</h5>
-                            <div class="col-6 mb-3">
+            <div class="col-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Product Images</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
                                 <label for="image" class="form-label">Hình ảnh sản phẩm:</label>
                                 <input type="file" id="image" name="image" class="form-control" required="false"/>
                             </div>
-                            <div class="col-6 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label class="form-label" for="anotherImage">Hình ảnh khác:</label>
                                 <input class="form-control" type="file" name="anotherImage" accept="image/*" id="anotherImage" multiple>
                             </div>
@@ -60,78 +250,80 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12 mb-3">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="general-info-tab" data-bs-toggle="tab" data-bs-target="#general-info" type="button" role="tab" aria-controls="general-info" aria-selected="true">General Info</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="configuration-tab" data-bs-toggle="tab" data-bs-target="#configuration" type="button" role="tab" aria-controls="configuration" aria-selected="false">Configuration</button>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active p-3" id="general-info" role="tabpanel" aria-labelledby="general-info-tab">
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">Stocks</label>
-                                    <input type="number" class="form-control" placeholder="Enter stock" th:field="*{quantityStock}">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">Price</label>
-                                    <input type="number" class="form-control" placeholder="Enter price" th:field="*{originalPrice}">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">Discount Price</label>
-                                    <input type="number" class="form-control" placeholder="Enter discount price" th:field="*{discountedPrice}">
-                                </div>
+            <div class="col-12 mb-3">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="general-info-tab" data-bs-toggle="tab" data-bs-target="#general-info" type="button" role="tab" aria-controls="general-info" aria-selected="true">General Info</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="configuration-tab" data-bs-toggle="tab" data-bs-target="#configuration" type="button" role="tab" aria-controls="configuration" aria-selected="false">Configuration</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active p-3" id="general-info" role="tabpanel" aria-labelledby="general-info-tab">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Stocks</label>
+                                <input type="number" class="form-control" placeholder="Enter stock" th:field="*{quantityStock}">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Price</label>
+                                <input type="number" class="form-control" placeholder="Enter price" th:field="*{originalPrice}">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Discount Price</label>
+                                <input type="number" class="form-control" placeholder="Enter discount price" th:field="*{discountedPrice}">
                             </div>
                         </div>
-                        <div class="tab-pane fade show p-3" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
-                            <div class="row">
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label">CPU</label>
-                                    <input type="text" class="form-control" th:field="*{configuration.cpu}">
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label">RAM</label>
-                                    <input type="text" class="form-control" th:field="*{configuration.ram}" >
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label">Storage</label>
-                                    <input type="text" class="form-control" th:field="*{configuration.storage}">
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label">OS</label>
-                                    <input type="text" class="form-control" th:field="*{configuration.os}">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">Graphics</label>
-                                    <input type="text" class="form-control" th:field="*{configuration.graphics}">
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">Display</label>
-                                    <input type="text" class="form-control" th:field="*{configuration.display}" >
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">Battery</label>
-                                    <input type="text" class="form-control" th:field="*{configuration.battery}">
-                                </div>
+                    </div>
+                    <div class="tab-pane fade p-3" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">CPU</label>
+                                <input type="text" class="form-control" th:field="*{configuration.cpu}">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">RAM</label>
+                                <input type="text" class="form-control" th:field="*{configuration.ram}">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Storage</label>
+                                <input type="text" class="form-control" th:field="*{configuration.storage}">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">OS</label>
+                                <input type="text" class="form-control" th:field="*{configuration.os}">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Graphics</label>
+                                <input type="text" class="form-control" th:field="*{configuration.graphics}">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Display</label>
+                                <input type="text" class="form-control" th:field="*{configuration.display}">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Battery</label>
+                                <input type="text" class="form-control" th:field="*{configuration.battery}">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
             <div class="col-12 text-end">
                 <input type="submit" class="btn btn-success" value="Submit">
             </div>
         </div>
     </form>
-
 </div>
 <th:block th:replace="layout::footer"></th:block>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1200,
+    });
+</script>
 <script th:inline="javascript">
     var categories = /*[[${categories}]]*/ /*<![CDATA[${#lists.toJson(categories)}]]*/;
 

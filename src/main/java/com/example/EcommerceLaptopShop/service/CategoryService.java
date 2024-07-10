@@ -38,8 +38,8 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Optional<Category> findById(Long id) {
-        return categoryRepository.findById(id);
+    public Category findById(Long id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Danh mục có id: " + id + " không tồn tại."));
     }
 
     public void deleteById(Long id) {

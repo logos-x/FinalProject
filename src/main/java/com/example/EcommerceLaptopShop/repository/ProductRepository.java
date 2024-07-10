@@ -30,7 +30,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> randomProduct();
 
     @Query(value = "select " +
-            "p.id, p.name, p.description, p.quantity, p.original_price, p.category_id, p.discount_price, p.thumbnail, p.is_activated, p.is_deleted, p.configuration_id" +
+            "p.id, p.name, p.description, p.quantity, p.original_price, p.category_id, p.discount_price, p.thumbnail, p.is_activated, p.is_deleted, p.configuration_id " +
             "from products p where p.is_deleted = false and p.is_activated = true order by p.original_price desc limit 9", nativeQuery = true)
     List<Product> filterHighProducts();
 

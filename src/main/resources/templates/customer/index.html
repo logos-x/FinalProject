@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibrant Shop</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
     <style>
         body {
             background: linear-gradient(to right, #b7fff3, #ffd0d0);
@@ -27,9 +28,6 @@
             z-index: 1000;
         }
 
-        .logo-container {
-            flex: 1;
-        }
 
         header img {
             height: 40px;
@@ -222,28 +220,6 @@
 </head>
 <body>
 <th:block th:replace="~{layout::header}"></th:block>
-<header>
-    <div class="logo-container">
-        <img src="https://placehold.co/100x50?text=Logo" alt="Logo">
-    </div>
-    <nav>
-        <a href="#">Home</a>
-        <div class="dropdown">
-            <a href="#">Shop</a>
-            <div class="dropdown-content">
-                <a href="#">All Products</a>
-                <a href="#">Electronics</a>
-                <a href="#">Clothing</a>
-                <a href="#">Accessories</a>
-            </div>
-        </div>
-        <a href="#">Contact</a>
-    </nav>
-    <div class="search-container">
-        <input type="text" placeholder="Search...">
-        <button>Search</button>
-    </div>
-</header>
 <main>
     <section class="hero-section">
         <h1>The New Standard</h1>

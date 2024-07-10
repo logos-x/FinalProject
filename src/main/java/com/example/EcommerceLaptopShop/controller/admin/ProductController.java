@@ -101,43 +101,48 @@ public class ProductController {
         return fileName;
     }
 
-//    @GetMapping("/edit/{id}")
-//    public String showEditForm(@PathVariable("id") Long id, Model model) {
-//        Product product = productService.findById(id).orElseThrow(() -> new RuntimeException("Product not found on :: " + id));
-//        if (product != null) {
-//            model.addAttribute("product", product);
-//            model.addAttribute("categories", categoryService.getAllCategories());
-//            return "product/edit-form";
-//        }
-//        return "redirect:/products";
-//    }
-//
-//    @PostMapping("/edit/{id}")
-//    public String updateProduct(@PathVariable("id") Long id,
-//                                @Valid @ModelAttribute("product") Product product,
-//                                BindingResult result, Model model,
-//                                @RequestParam("image") MultipartFile imageFile) {
-//        if (result.hasErrors()) {
-//            model.addAttribute("categories", categoryService.getAllCategories());
-//            return "product/edit-form";
-//        }
-//        Product editedProduct = productService.findProductById(id).orElseThrow(() -> new RuntimeException("Product not found on :: " + id));
-//        if (editedProduct != null) {
-//            editedProduct.setName(product.getName());
-//            editedProduct.setPrice(product.getPrice());
-//            editedProduct.setDescription(product.getDescription());
-//            editedProduct.setCategory(product.getCategory());
-//
-//            if (imageFile != null && !imageFile.isEmpty()) {
-//                try {
-//                    String imageName = saveImageStatic(imageFile);
-//                    editedProduct.setThumnail("/images/" + imageName);
-//                } catch (IOException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//            productService.saveProduct(editedProduct);
-//        }
-//        return "redirect:/products";
-//    }
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+        Product product = productService.findById(id);
+        if (product != null) {
+            model.addAttribute("product", product);
+            model.addAttribute("brands", brandService.findAllByActivatedTrue());
+            model.addAttribute("categories", categoryService.findAllByActivatedTrue());
+            return "admin/edit-form";
+        }
+        return "redirect:/admin/products";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateProduct(@PathVariable("id") Long id,
+                                @Valid @ModelAttribute("product") Product product,
+                                BindingResult result, Model model,
+                                @RequestParam("image") MultipartFile imageFile) {
+        if (result.hasErrors()) {
+            model.addAttribute("brands", brandService.findAllByActivatedTrue());
+            return "admin/edit-form";
+        }
+
+        Product existingProduct = productService.findById(id);
+        Configuration configuration = product.getConfiguration();
+        if (!imageFile.isEmpty()) {
+            try {
+                String imageName = saveImageStatic(imageFile);
+                product.setThumbnail("/images/" + imageName);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            product.setThumbnail(existingProduct.getThumbnail());
+        }
+
+        productService.update(product, configuration);
+        return "redirect:/admin/products";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable("id") Long id) {
+        productService.deleteById(id);
+        return "redirect:/products";
+    }
 }

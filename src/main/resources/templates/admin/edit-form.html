@@ -180,8 +180,8 @@
     <div class="circle"></div>
 </div>
 <div class="container mt-4 form-container">
-    <h1 class="text-center mb-4" th:text="${title}">Add Product</h1>
-    <form th:action="@{/admin/products/newProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
+    <h1 class="text-center mb-4">Edit Product</h1>
+    <form th:action="@{/admin/products/edit/{id}(id=${product.id})}" th:object="${product}" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-8 mb-3">
                 <div class="card">
@@ -208,6 +208,7 @@
                             <label class="form-label">Select product category</label>
                             <select class="form-select" th:field="*{category.id}" id="categorySelect">
                                 <option value="">-- Chọn loại máy --</option>
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                             </select>
                         </div>
                     </div>
@@ -219,12 +220,11 @@
                         <h5 class="card-title">Product Images</h5>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="image" class="form-label">Hình ảnh sản phẩm:</label>
-                                <input type="file" id="image" name="image" class="form-control" required="false"/>
+                                <img th:src="${product.thumbnail}" alt="product current thumbnail">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label" for="anotherImage">Hình ảnh khác:</label>
-                                <input class="form-control" type="file" name="anotherImage" accept="image/*" id="anotherImage" multiple>
+                                <label for="image" class="form-label">Hình ảnh sản phẩm:</label>
+                                <input type="file" id="image" name="image" class="form-control"/>
                             </div>
                         </div>
                     </div>
@@ -294,12 +294,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 text-end">
-                <input type="submit" class="btn btn-success" value="Submit">
+            <div>
+                <div class="col-3 text-end">
+                    <input type="submit" class="btn btn-success" value="Submit">
+                </div>
+                <div class="card-footer text-muted">
+                    <a th:href="@{/admin/products}">Cancel</a>
+                </div>
             </div>
-            <div class="card-footer text-muted">
-                <a th:href="@{/admin/products}">Cancel</a>
-            </div>
+
         </div>
     </form>
 </div>

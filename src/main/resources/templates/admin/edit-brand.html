@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm danh mục mới</title>
-    <th:block th:replace="layout::link-css"></th:block>
+    <title>Add Product</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <style>
-
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #f87d7d 0%, #8effd9 100%);
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
         .floating-circles {
             position: fixed;
             top: 0;
@@ -16,11 +25,10 @@
             z-index: -1;
             overflow: hidden;
         }
-
         .circle {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 0, 145, 0.2), rgba(0, 190, 255, 0.2));
+            background: radial-gradient(circle, rgba(255, 0, 150, 0.2), rgba(2, 190, 239, 0.2));
             animation: move 10s linear infinite, scale 5s ease-in-out infinite;
             mix-blend-mode: overlay;
         }
@@ -110,67 +118,53 @@
             }
         }
 
+        .form-container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 55px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 1000px;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #333333;
+        }
+
         .form-control {
             border-radius: 20px;
-            border: 1px solid #ccc;
+            border: 1px solid rgba(0, 0, 0, 0.26);
+
+        }
+        .card {
+            margin-bottom: 15px;
+            border: 1px solid #0099ff;
+            border-radius: 25px;
+        }
+
+        .card-body h5 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+
+        .form-select {
+
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.26);
+            padding: 10px;
             transition: border-color 0.3s ease;
         }
-        .form-control:focus {
-            border-color: #007bff;
-        }
-        .card{
-            border-radius: 20px;
-        }
-        .btn-primar {
-            margin-top: 15px;
-            text-decoration: none;
-            position: relative;
-            border: none;
-            font-size: 18px;
 
-            cursor: pointer;
-            color: #fff;
-            width: 8em;
-            height: 1.7em;
-            line-height: 1em;
-            text-align: center;
-            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
-            background-size: 300%;
-            border-radius: 30px;
-            z-index: 1;
+        .form-select:focus {
+            border-color: #ff9f43;
+            box-shadow: 0 0 5px rgba(255, 159, 67, 0.5);
         }
 
-        .btn-primar:hover {
-            animation: ani 8s linear infinite;
-            border: none;
-        }
-        @keyframes ani {
-            0% {
-                background-position: 0%;
-            }
-
-            100% {
-                background-position: 400%;
-            }
-        }
-        .btn-primar:before{
-            content: "";
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            z-index: -1;
-            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
-            background-size: 400%;
-            border-radius: 35px;
-            transition: 1s;
-        }
-        .btn-primar:hover::before{
-            filter: blur(20px);
-        }
-        .btn-primar:active{
-            background: linear-gradient(32deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+        .form-select option {
+            padding: 10px;
         }
     </style>
 </head>
@@ -185,26 +179,27 @@
     <div class="circle"></div>
     <div class="circle"></div>
 </div>
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-body">
-            <h1 class="card-title">Thêm danh mục mới</h1>
-            <form th:action="@{/admin/categories/add-brand}" th:object="${brand}" method="post">
-                <div class="form-group">
-                    <label class="form-label" for="name">Tên danh mục:</label>
-                    <input class="form-control" type="text" th:field="*{name}" id="name">
-                    <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-                </div>
-                <div class="form-group d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primar">Submit</button>
-                </div>
-            </form>
+<div class="container mt-4 form-container">
+    <h1 class="text-center mb-4">Edit Brand</h1>
+    <form th:action="@{/admin/categories/edit-brand/{id}(id=${brand.id})}" th:object="${brand}" method="post">
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label class="form-label" for="name">Brand name:</label>
+                <input class="form-control" type="text" th:field="*{name}" id="name">
+            </div>
+            <div class="col-12 text-end">
+                <input type="submit" class="btn btn-success" value="Submit">
+            </div>
         </div>
-        <div class="card-footer text-muted">
-            <a th:href="@{/admin/categories}">Cancel</a>
-        </div>
-    </div>
+    </form>
 </div>
 <th:block th:replace="layout::footer"></th:block>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1200,
+    });
+</script>
 </body>
 </html>

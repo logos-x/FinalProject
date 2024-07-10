@@ -3,19 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập</title>
     <th:block th:replace="~{layout::link-css}"></th:block>
     <th:block th:replace="~{layout::link-fontawesome}"></th:block>
+    <style>
+
+        .floating-circles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 0, 145, 0.2), rgba(0, 190, 255, 0.2));
+            animation: move 10s linear infinite, scale 5s ease-in-out infinite;
+            mix-blend-mode: overlay;
+        }
+
+        .circle:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            top: -50px;
+            left: 50px;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(2) {
+            width: 700px;
+            height: 700px;
+            top: -100px;
+            right: 100px;
+            animation-delay: 0s;
+        }
+
+        .circle:nth-child(3) {
+            width: 600px;
+            height: 600px;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: 4s;
+        }
+
+        .circle:nth-child(4) {
+            width: 800px;
+            height: 800px;
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 6s;
+        }
+
+        .circle:nth-child(5) {
+            width: 400px;
+            height: 400px;
+            top: 200px;
+            left: 200px;
+            animation-delay: 8s;
+        }
+
+        .circle:nth-child(6) {
+            width: 900px;
+            height: 900px;
+            bottom: 250px;
+            right: 250px;
+            animation-delay: 10s;
+        }
+
+        .circle:nth-child(7) {
+            width: 700px;
+            height: 700px;
+            top: 300px;
+            left: 300px;
+            animation-delay: 12s;
+        }
+
+        .circle:nth-child(8) {
+            width: 1100px;
+            height: 1100px;
+            bottom: 350px;
+            right: 350px;
+            animation-delay: 14s;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(-20px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+
+        @keyframes scale {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
+            50% { background: linear-gradient(135deg, #c3cfe2 0%, #f5f7fa 100%); }
+            100% { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
+        }
+        .container {
+            animation: fadeIn 1s ease-in-out;
+            border-radius: 20px;
+            transform: translateY(-20px);
+            animation: slideUp 0.5s ease-in-out forwards;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #000000;
+
+        }
+        .input-group-text {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 20px 0 0 20px;
+        }
+        .form-control {
+            border: 1px solid #ced4da;
+            border-radius: 20px;
+            padding: 10px;
+            width: 100%;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .btn-primary {
+            margin: auto;
+            text-decoration: none;
+            position: relative;
+            border: none;
+            font-size: 18px;
+            font-family: Arial;
+            cursor: pointer;
+            color: #fff;
+            width: 90%;
+            height: auto;
+            margin-bottom: 20px;
+            text-align: center;
+            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+            background-size: 300%;
+            border-radius: 30px;
+            z-index: 1;
+        }
+        .btn-primary:hover {
+            animation: ani 8s linear infinite;
+            border: none;
+        }
+        @keyframes ani {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 400%;
+            }
+        }
+        .btn-primary:before{
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            z-index: -1;
+            background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+            background-size: 400%;
+            border-radius: 35px;
+            transition: 1s;
+        }
+        .btn-primary:hover::before{
+            filter: blur(20px);
+        }
+        .btn-primary:active{
+            background: linear-gradient(32deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+        }
+        .link-secondary {
+            color: #007bff;
+            transition: color 0.3s;
+        }
+        .link-secondary:hover {
+            color: #0056b3;
+        }
+        .btn-outline-primary {
+            border-color: #007bff;
+            color: #007bff;
+            transition: all 0.3s, transform 0.3s;
+        }
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); }
+            to { transform: translateY(0); }
+        }
+        .container {
+            margin-top: 50px;
+        }
+
+        .bg-custom{
+            background: none;
+        }
+        .bg-white {
+            background-color: rgb(172, 170, 170);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .btn-outline-primary{
+            border-radius: 10px;
+        }
+
+    </style>
 </head>
-<body class="bg-gradient-primary">
+<body>
 <th:block th:replace="~{layout::header}"></th:block>
-<!-- Login 1 - Bootstrap Brain Component -->
-<div class="bg-light py-3 py-md-5">
+<div class="floating-circles">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+</div>
+
+<div class="bg-custom py-3 py-md-5">
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-12 col-md-11 col-lg-8 col-xl-7 col-xxl-6">
-                <div class="bg-white p-4 p-md-5 rounded shadow-sm">
+                <div class="bg-white">
                     <div class="row">
                         <div class="col-12 mb-5">
                             <div class="text-center">
@@ -24,6 +271,12 @@
                         </div>
                     </div>
                     <form th:action="@{/login}" method="post">
+                        <div th:if="${param.error}" class="alert alert-danger animate__animated animate__shakeX">
+                            Tên đăng nhập hoặc mật khẩu không hợp lệ
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success animate__animated animate__fadeIn">
+                            Bạn đã đăng xuất
+                        </div>
                         <div class="row gy-3 gy-md-4 overflow-hidden">
                             <div class="col-12">
                                 <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
@@ -57,34 +310,36 @@
                                     <button class="btn btn-primary btn-lg" type="submit">Log In</button>
                                 </div>
                             </div>
+                            <div class="row mt-3">
+                                <div class="col-12 d-flex justify-content-end">
+                                    <a href="/register" class="link-secondary text-decoration-none me-3">Đăng ký ngay</a>
+                                    <a href="/forgotPassword" class="link-secondary text-decoration-none">Quên mật khẩu</a>
+                                </div>
+                            </div>
+
+
                         </div>
                     </form>
+
                     <div class="row">
                         <div class="col-12">
-                            <hr class="mt-5 mb-4 border-secondary-subtle">
-                            <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                                <a href="/register" class="link-secondary text-decoration-none">Đăng ký ngay</a>
-                                <a href="/forgotPassword" class="link-secondary text-decoration-none mr-auto">Quên mật khẩu</a>
+                            <div class="text-center">
+                                <p class="mt-5 mb-4">Or sign in with</p>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <p class="mt-5 mb-4">Or sign in with</p>
-                            <div class="d-flex gap-3 flex-column flex-md-row">
-                                <a th:href="@{/oauth2/authorization/google}" class="btn bsb-btn-xl btn-outline-primary">
+                            <div class="d-flex justify-content-center gap-3 flex-column flex-md-row">
+                                <a th:href="@{/oauth2/authorization/google}" class="btn btn-outline-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
                                         <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
                                     </svg>
                                     <span class="ms-2 fs-6">Google</span>
                                 </a>
-                                <a href="#!" class="btn bsb-btn-xl btn-outline-primary">
+                                <a href="#!" class="btn btn-outline-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
                                         <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
                                     </svg>
                                     <span class="ms-2 fs-6">Facebook</span>
                                 </a>
-                                <a href="#!" class="btn bsb-btn-xl btn-outline-primary">
+                                <a href="#!" class="btn btn-outline-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
                                         <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
                                     </svg>
@@ -98,7 +353,6 @@
         </div>
     </div>
 </div>
-
 <th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>

@@ -23,7 +23,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                 redirectUrl = "/admin";
                 break;
             } else if (authority.getAuthority().equals("USER")) {
-                redirectUrl = "/shop";
+                redirectUrl = "/";
                 break;
             }
         }

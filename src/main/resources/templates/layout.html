@@ -39,12 +39,12 @@
                         <a class="nav-link active" href="/cart">
                             <i class="fa-solid fa-cart-shopping fa-2x"></i></a>
                     </li>
-                    <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">
-                        <span class="navbar-text">
-                            Xin chào,
-                            <span sec:authentication="principal.attributes['name']" style="margin-right:20px;"></span>
-                        </span>
-                    </li>
+<!--                    <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">-->
+<!--                        <span class="navbar-text">-->
+<!--                            Xin chào,-->
+<!--                            <span sec:authentication="principal.attributes['name']" style="margin-right:20px;"></span>-->
+<!--                        </span>-->
+<!--                    </li>-->
                     <li sec:authorize="isAuthenticated()">
                         <form th:action="@{/logout}" method="post">
                             <button class="btn btn-outline-primary" type="submit">Đăng xuất</button>

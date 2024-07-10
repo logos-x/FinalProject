@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -338,6 +338,77 @@
             </div>
         </div>
     </section>
+    <div class="products-box">
+        <div class="container" th:each="brand : ${brands}">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1 th:text="${brand.name}"></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="special-menu text-center">
+                        <div class="button-group filter-button-group">
+                            <button class="active" data-filter="*">All</button>
+                            <button data-filter=".best-seller">Best seller</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row special-list">
+                <div class="col-lg-3 col-md-6 special-grid" th:each="product : ${products}"
+                     th:if="${brand.name == product.category.brand.name}">
+                    <form th:action="@{/add-to-cart}" method="post">
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <img th:src="${product.thumbnail}" class="img-fluid" alt="Image">
+                                <div class="mask-icon">
+                                    <ul>
+                                        <li><a th:href="@{/product-detail/{id}(id = ${product.id})}" data-toggle="tooltip"
+                                               data-placement="right"
+                                               title="View"><i class="fas fa-eye"></i></a></li>
+                                    </ul>
+                                    <input type = "hidden" th:value = "${product.id}" name = "id" class = "form-control">
+                                    <input type="submit" class="btn hvr-hover" value="Add to cart">
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h4 th:text="${product.name}"></h4>
+                                <h5 th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + 'VNĐ'}"></h5>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Images</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:src="${product.thumbnail}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.originalPrice}"></td>
+            <td>
+                <form th:action="@{/cart/add-to-cart}" method="post" class="flex-grow-1 mr-3">
+                    <input type="number" name="quantity" min="1" value="1" class="form-control d-inline-block" style="width: 70px;">
+                    <input type="hidden" th:value="${product.id}" name="productId" style="width: max-content"/>
+                    <button type="submit" class="btn btn-warning btn-sm">Add to cart</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </main>
 <footer>
     <p>&copy; 2024 Your Company. All rights reserved.</p>

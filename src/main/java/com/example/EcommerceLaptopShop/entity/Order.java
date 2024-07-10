@@ -21,6 +21,7 @@ public class Order {
     private int quantity;
     private String paymentMethod;
     private String customerName;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-//    private List<OrderDetail> orderDetailList;
+    private boolean isAccept;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
+    private List<OrderDetail> orderDetailList;
 }

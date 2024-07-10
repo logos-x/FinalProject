@@ -39,4 +39,22 @@ public class OrderService {
         cartService.clearCart();
         return order;
     }
+
+    public List<Order> getAll() {
+        return orderRepository.findAll();
+    }
+
+    public List<OrderDetail> getDetailOfOrder(Long id) {
+        return orderDetailRepository.getDetailOfOrder(id);
+    }
+
+    public Order acceptOrder(Long id) {
+        Order order = orderRepository.getById(id);
+        order.setAccept(true);
+        return orderRepository.save(order);
+    }
+
+    public void cancelOrder(Long id) {
+        orderRepository.deleteById(id);
+    }
 }

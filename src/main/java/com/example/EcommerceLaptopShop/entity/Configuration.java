@@ -18,4 +18,5 @@ public class Configuration {
     private String display;
     private String battery;
     private String os;
+    private String material;
 }

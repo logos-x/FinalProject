@@ -15,7 +15,7 @@
             <a class="navbar-brand" href="#"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbar SupportedContent"
+                    aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -34,17 +34,17 @@
                         <a th:href="@{/categories/new}" class="nav-link text-black">Add New Category</a>
                     </li>
                 </ul>
+
+                <form class="search-bar" action="/search" method="get" style="display: flex; align-items: center;">
+                    <input type="text" name="query" placeholder="Search..." size="80" style="height: 40px; padding: 10px; border-radius: 15px; border: 1px solid #007bff; margin-right: 10px;">
+                    <button class="btn btn-success" style="width :150px; height: 40px; border-radius: 15px;margin-right: 500px">Search</button>
+                </form>
+
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
                     <li>
                         <a class="nav-link active" href="/cart">
                             <i class="fa-solid fa-cart-shopping fa-2x"></i></a>
                     </li>
-<!--                    <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">-->
-<!--                        <span class="navbar-text">-->
-<!--                            Xin chào,-->
-<!--                            <span sec:authentication="principal.attributes['name']" style="margin-right:20px;"></span>-->
-<!--                        </span>-->
-<!--                    </li>-->
                     <li sec:authorize="isAuthenticated()">
                         <form th:action="@{/logout}" method="post">
                             <button class="btn btn-outline-primary" type="submit">Đăng xuất</button>

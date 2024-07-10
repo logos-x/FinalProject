@@ -16,8 +16,6 @@
             align-items: center;
             overflow-x: hidden;
         }
-
-
         .floating-circles {
             position: fixed;
             top: 0;
@@ -27,7 +25,6 @@
             z-index: -1;
             overflow: hidden;
         }
-
         .circle {
             position: absolute;
             border-radius: 50%;
@@ -262,33 +259,37 @@
                     </div>
                     <div class="tab-pane fade p-3" id="configuration" role="tabpanel" aria-labelledby="configuration-tab">
                         <div class="row">
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label">CPU</label>
                                 <input type="text" class="form-control" th:field="*{configuration.cpu}">
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label">RAM</label>
                                 <input type="text" class="form-control" th:field="*{configuration.ram}">
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label">Storage</label>
                                 <input type="text" class="form-control" th:field="*{configuration.storage}">
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label">OS</label>
                                 <input type="text" class="form-control" th:field="*{configuration.os}">
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label">Graphics</label>
                                 <input type="text" class="form-control" th:field="*{configuration.graphics}">
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label">Display</label>
                                 <input type="text" class="form-control" th:field="*{configuration.display}">
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label class="form-label">Battery</label>
                                 <input type="text" class="form-control" th:field="*{configuration.battery}">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Material</label>
+                                <input type="text" class="form-control" th:field="*{configuration.material}">
                             </div>
                         </div>
                     </div>

@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -95,8 +97,8 @@ public class ProductService {
         return productRepository.findById(id).get();
     }
 
-    public List<ProductDto> randomProduct() {
-        return transferData(productRepository.randomProduct());
+    public List<Product> randomProduct() {
+        return productRepository.randomProduct();
     }
 
     public Page<ProductDto> searchProducts(int pageNo, String keyword) {
@@ -113,6 +115,24 @@ public class ProductService {
         Page<Product> productPage = toPage(productLists, pageable);
         return productPage;
     }
+
+    private List<String> gamingLaptops = Arrays.asList("Acer Aspire 7", "Acer Nitro", "Asus ROG", "Asus TUF", "Dell Alienware", "Dell Gaming G15", "Lenovo IdeaPad Gaming",
+            "Gigabyte G5", "Gigabyte Gaming AERO", "Gigabyte AORUS", "Gigabyte MF", "Lenovo Legion", "Lenovo LOG", "MSI Cyborg", "MSI Gaming Bravo", "MSI Gaming GF63", "MSI Katana");
+    private List<String> officeLaptops = Arrays.asList("Acer Aspire 3", "Acer Swift", "Asus ExpertBook", "Asus VivoBook", "Asus ZenBook", "Dell Inspiron", "Dell XPS", "Lenovo IdeaPad", "Lenovo ThinkBook",
+            "Lenovo Yoga", "Macbook Air", "Macbook Pro", "Vaio FE", "HP Pavilion", "HP Envy", "HP Victus", "HP Elitebook", "LG Gram");
+
+    public List<Product> getGamingLaptop() {
+        return productRepository.getAllProduct().stream()
+                .filter(x -> gamingLaptops.contains(x.getCategory().getName()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Product> getOfficeLaptop() {
+        return productRepository.getAllProduct().stream()
+                .filter(x -> officeLaptops.contains(x.getCategory().getName()))
+                .collect(Collectors.toList());
+    }
+
 
     public Page<ProductDto> getAllProductsForCustomer(int pageNo) {
         return null;

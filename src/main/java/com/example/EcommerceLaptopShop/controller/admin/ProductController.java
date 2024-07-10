@@ -5,6 +5,7 @@ import com.example.EcommerceLaptopShop.service.BrandService;
 import com.example.EcommerceLaptopShop.service.CategoryService;
 import com.example.EcommerceLaptopShop.service.ProductImageService;
 import com.example.EcommerceLaptopShop.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -89,7 +90,7 @@ public class ProductController {
                 }
             }
         }
-        return "redirect:";
+        return "redirect:/admin/products";
     }
 
     private String saveImageStatic(MultipartFile image) throws IOException {
@@ -99,4 +100,44 @@ public class ProductController {
         Files.copy(image.getInputStream(), path);
         return fileName;
     }
+
+//    @GetMapping("/edit/{id}")
+//    public String showEditForm(@PathVariable("id") Long id, Model model) {
+//        Product product = productService.findById(id).orElseThrow(() -> new RuntimeException("Product not found on :: " + id));
+//        if (product != null) {
+//            model.addAttribute("product", product);
+//            model.addAttribute("categories", categoryService.getAllCategories());
+//            return "product/edit-form";
+//        }
+//        return "redirect:/products";
+//    }
+//
+//    @PostMapping("/edit/{id}")
+//    public String updateProduct(@PathVariable("id") Long id,
+//                                @Valid @ModelAttribute("product") Product product,
+//                                BindingResult result, Model model,
+//                                @RequestParam("image") MultipartFile imageFile) {
+//        if (result.hasErrors()) {
+//            model.addAttribute("categories", categoryService.getAllCategories());
+//            return "product/edit-form";
+//        }
+//        Product editedProduct = productService.findProductById(id).orElseThrow(() -> new RuntimeException("Product not found on :: " + id));
+//        if (editedProduct != null) {
+//            editedProduct.setName(product.getName());
+//            editedProduct.setPrice(product.getPrice());
+//            editedProduct.setDescription(product.getDescription());
+//            editedProduct.setCategory(product.getCategory());
+//
+//            if (imageFile != null && !imageFile.isEmpty()) {
+//                try {
+//                    String imageName = saveImageStatic(imageFile);
+//                    editedProduct.setThumnail("/images/" + imageName);
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
+//            productService.saveProduct(editedProduct);
+//        }
+//        return "redirect:/products";
+//    }
 }

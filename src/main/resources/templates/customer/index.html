@@ -257,83 +257,33 @@
         <img src="https://placehold.co/400x400?text=Smartwatch" alt="Smartwatch">
     </section>
     <section class="products-section">
-        <h2>Featured Products</h2>
+        <h2>Laptop Gaming</h2>
         <div class="products-grid">
-            <div class="product">
-                <img src="https://placehold.co/200x200?text=Product1" alt="Product1">
-                <h3>Product 1</h3>
-                <p style="color: #ffdd57;">$99.99</p>
+            <div class="product" th:each="product : ${gamings}">
+                <img th:src="${product.thumbnail}" alt="Product8">
+                <h3 th:text="${product.name}"></h3>
+                <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + 'VNĐ'}" style="color: #ffdd57;"></p>
                 <button>Add to Cart</button>
             </div>
-            <div class="product">
-                <img src="https://placehold.co/200x200?text=Product2" alt="Product2">
-                <h3>Product 2</h3>
-                <p style="color: #ffdd57;">$199.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/200x200?text=Product3" alt="Product3">
-                <h3>Product 3</h3>
-                <p style="color: #ffdd57;">$299.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/200x200?text=Product4" alt="Product4">
-                <h3>Product 4</h3>
-                <p style="color: #ffdd57;">$399.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/200x200?text=Product5" alt="Product5">
-                <h3>Product 5</h3>
-                <p style="color: #ffdd57;">$499.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/200x200?text=Product6" alt="Product6">
-                <h3>Product 6</h3>
-                <p style="color: #ffdd57;">$599.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/200x200?text=Product7" alt="Product7">
-                <h3>Product 7</h3>
-                <p style="color: #ffdd57;">$699.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="https://placehold.co/200x200?text=Product8" alt="Product8">
-                <h3>Product 8</h3>
-                <p style="color: #ffdd57;">$799.99</p>
+        </div>
+
+        <h2>Laptop Văn phòng</h2>
+        <div class="products-grid">
+            <div class="product" th:each="product : ${offices}">
+                <img th:src="${product.thumbnail}" alt="Product8">
+                <h3 th:text="${product.name}"></h3>
+                <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + 'VNĐ'}" style="color: #ffdd57;"></p>
                 <button>Add to Cart</button>
             </div>
         </div>
     </section>
     <section class="deals-section">
         <h2>Hot Deals</h2>
-        <div class="deals-grid">
-            <div class="deal">
-                <img src="https://placehold.co/300x300?text=Deal1" alt="Deal1">
-                <h3>Deal 1</h3>
-                <p style="color: #ffdd57;">$79.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="deal">
-                <img src="https://placehold.co/300x300?text=Deal2" alt="Deal2">
-                <h3>Deal 2</h3>
-                <p style="color: #ffdd57;">$89.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="deal">
-                <img src="https://placehold.co/300x300?text=Deal3" alt="Deal3">
-                <h3>Deal 3</h3>
-                <p style="color: #ffdd57;">$99.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="deal">
-                <img src="https://placehold.co/300x300?text=Deal4" alt="Deal4">
-                <h3>Deal 4</h3>
-                <p style="color: #ffdd57;">$109.99</p>
+        <div class="products-grid">
+            <div class="product" th:each="product : ${hotdeals}">
+                <img th:src="${product.thumbnail}" alt="Product8">
+                <h3 th:text="${product.name}"></h3>
+                <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + '000 VNĐ'}" style="color: #ffdd57;"></p>
                 <button>Add to Cart</button>
             </div>
         </div>
@@ -376,7 +326,7 @@
                             </div>
                             <div class="why-text">
                                 <h4 th:text="${product.name}"></h4>
-                                <h5 th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + 'VNĐ'}"></h5>
+                                <h5 th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + '000 VNĐ'}"></h5>
                             </div>
                         </div>
                     </form>

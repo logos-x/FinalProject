@@ -25,13 +25,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByBrand(String brand);
 
     @Query(value = "select " +
-            "p.product_id, p.name, p.description, p.current_quantity, p.cost_price, p.category_id, p.sale_price, p.image, p.is_activated, p.is_deleted " +
-            "from products p where p.is_activated = true and p.is_deleted = false order by rand() limit 9", nativeQuery = true)
+            "p.id, p.name, p.description, p.quantity, p.original_price, p.category_id, p.discount_price, p.thumbnail, p.is_activated, p.is_deleted, p.configuration_id " +
+            "from products p where p.is_activated = true and p.is_deleted = false order by rand() limit 5", nativeQuery = true)
     List<Product> randomProduct();
 
     @Query(value = "select " +
-            "p.product_id, p.name, p.description, p.current_quantity, p.cost_price, p.category_id, p.sale_price, p.image, p.is_activated, p.is_deleted " +
-            "from products p where p.is_deleted = false and p.is_activated = true order by p.cost_price desc limit 9", nativeQuery = true)
+            "p.id, p.name, p.description, p.quantity, p.original_price, p.category_id, p.discount_price, p.thumbnail, p.is_activated, p.is_deleted, p.configuration_id" +
+            "from products p where p.is_deleted = false and p.is_activated = true order by p.original_price desc limit 9", nativeQuery = true)
     List<Product> filterHighProducts();
 
     @Query(value = "select " +

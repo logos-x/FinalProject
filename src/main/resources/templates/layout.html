@@ -7,7 +7,6 @@
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <script th:fragment="link-fontawesome" src="https://kit.fontawesome.com/7994a6a9a6.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
 <header th:fragment="header">
     <nav class="navbar navbar-expand-lg bg-light navbar-light">
@@ -22,16 +21,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/static">Trang chủ</a>
+                        <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-black active" aria-current="page" href="/products">Product</a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/products/new}" class="nav-link text-black">Add New Product</a>
+                        <a th:href="@{/admin/products/newProduct}" class="nav-link text-black">Add New Product</a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/categories/new}" class="nav-link text-black">Add New Category</a>
+                        <a th:href="@{/admin/categories/newBrand}" class="nav-link text-black">Add New Category</a>
                     </li>
                 </ul>
 

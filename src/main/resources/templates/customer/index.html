@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibrant Shop</title>
     <style>
         body {
-            background: linear-gradient(to right, #b7fff3, #ffd0d0);
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
             font-family: 'Arial', sans-serif;
             margin: 0;
             color: #444;
@@ -16,8 +16,9 @@
             color: inherit;
             text-decoration: none;
         }
+
         header {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.8);
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
@@ -26,11 +27,6 @@
             position: relative;
             z-index: 1000;
         }
-
-        .logo-container {
-            flex: 1;
-        }
-
         header img {
             height: 40px;
             transition: transform 0.3s;
@@ -66,7 +62,7 @@
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.8);
             min-width: 160px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
@@ -96,6 +92,8 @@
         .search-container {
             display: flex;
             align-items: center;
+            margin-right: 2rem;
+            flex-grow: 1;
         }
 
         .search-container input[type="text"] {
@@ -103,8 +101,10 @@
             border-radius: 25px;
             border: none;
             outline: none;
-            margin-right: 0.5rem;
+            margin-left: 25rem;
             font-size: 1rem;
+            width: 50rem;
+            margin-right: 10px;
         }
 
         .search-container button {
@@ -122,12 +122,23 @@
             background: #ffc107;
         }
 
+        .login-container {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .login-container a,
+        .login-container form {
+            margin-left: 1rem;
+        }
+
         main {
             padding: 2rem;
         }
 
         .hero-section, .products-section, .deals-section {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -142,7 +153,7 @@
         .hero-section img {
             width: 300px;
             margin-top: 1rem;
-            border: 4px solid #ffdd57;
+            border: 2px solid #00ffe9;
             border-radius: 50%;
             transition: transform 0.3s;
         }
@@ -209,23 +220,203 @@
             gap: 2rem;
         }
 
-        footer {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-            color: #fff;
-            position: relative;
-            z-index: 1000;
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                margin-bottom: 1rem;
+            }
+
+            .search-container {
+                margin-right: 0;
+                width: 60%;
+            }
+
+            .search-container input[type="text"] {
+                width: 100%;
+            }
+
+            .login-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .login-container a, .login-container form {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
         }
+
+        /* Styling for the products box */
+        .products-box {
+            background-color: #333;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        .title-all h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .special-menu .filter-button-group button {
+            background: #0066ff;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            margin-right: 20px;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+
+        }
+
+        .special-menu .filter-button-group button:hover,
+        .special-menu .filter-button-group button.active {
+            background: #feb47b;
+        }
+
+        .special-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .products-single {
+            background: #444;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            color: #fff;
+        }
+
+        .products-single:hover {
+            transform: translateY(-10px);
+            background: #555;
+        }
+
+        .products-single img {
+            width: 180px;
+            height: 180px;
+            border: 2px solid #ff7e5f;
+            border-radius: 15px;
+            transition: transform 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .products-single img:hover {
+            transform: scale(1.1);
+        }
+
+        .mask-icon ul li a {
+            color: #fff;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .mask-icon ul li a:hover {
+            color: #feb47b;
+        }
+
+        .why-text h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .why-text h5 {
+            font-size: 1.2rem;
+            color: #ff7e5f;
+        }
+
+        /* Styling for the table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        table thead th {
+            background: #ff7e5f;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-family: Arial, sans-serif;
+        }
+
+        table tbody td {
+            background: #555;
+            color: white;
+            padding: 1rem;
+            border-bottom: 1px solid #777;
+        }
+
+        table tbody tr:hover {
+            background: #666;
+        }
+
+        table img {
+            width: 50px;
+            border-radius: 8px;
+        }
+
+        .form-control {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ff7e5f;
+            color: #ff7e5f;
+        }
+
+        .btn-warning {
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: none;
+            background: #ff7e5f;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .btn-warning:hover {
+            background: #feb47b;
+        }
+        .login-container a.btn-outline-primary {
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            border: none;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+            font-size: 1rem;
+            font-weight: bold;
+            border: 2px solid #fff;
+        }
+
+        .login-container a.btn-outline-primary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
     </style>
 </head>
 <body>
-<th:block th:replace="~{layout::header}"></th:block>
 <header>
-    <div class="logo-container">
-        <img src="https://placehold.co/100x50?text=Logo" alt="Logo">
-    </div>
+
     <nav>
         <a href="#">Home</a>
         <div class="dropdown">
@@ -233,30 +424,42 @@
             <div class="dropdown-content">
                 <a href="#">All Products</a>
                 <a href="#">Electronics</a>
-                <a href="#">Clothing</a>
+                <a href="/admin/products/newProduct">Clothing</a>
                 <a href="#">Accessories</a>
             </div>
         </div>
+        <a href="#">About</a>
         <a href="#">Contact</a>
     </nav>
     <div class="search-container">
         <input type="text" placeholder="Search...">
         <button>Search</button>
+
+        <div class="login-container">
+            <a class="nav-link active" href="/cart">
+                <i class="fa-solid fa-cart-shopping fa-2x"></i>
+            </a>
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                <button class="btn btn-outline-primary" type="submit">Đăng xuất</button>
+            </form>
+            <a href="/login" class="btn btn-outline-primary" sec:authorize="!isAuthenticated()">Đăng nhập</a>
+        </div>
     </div>
 </header>
 <main>
-    <section class="hero-section">
-        <h1>The New Standard</h1>
-        <p>With Smartwatch</p>
-        <p style="font-size: 2rem; color: #ffdd57;">$749.99</p>
-        <button>Shop Now</button>
-        <img src="https://placehold.co/400x400?text=Smartwatch" alt="Smartwatch">
+
+    <section class="hero-section" style="background-image: url('/images/back.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <h1>WELCOME</h1>
+        <p>************</p>
+        <p style="font-size: 2rem; color: #ffdd57;">LAPTOP SHOP</p>
+        <img src="/images/th.jpg">
     </section>
+
     <section class="products-section">
         <h2>Laptop Gaming</h2>
         <div class="products-grid">
             <div class="product" th:each="product : ${gamings}">
-                <img th:src="${product.thumbnail}" alt="Product8">
+                <img th:src="${product.thumbnail}" alt="Product">
                 <h3 th:text="${product.name}"></h3>
                 <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + 'VNĐ'}" style="color: #ffdd57;"></p>
                 <button>Add to Cart</button>
@@ -266,7 +469,7 @@
         <h2>Laptop Văn phòng</h2>
         <div class="products-grid">
             <div class="product" th:each="product : ${offices}">
-                <img th:src="${product.thumbnail}" alt="Product8">
+                <img th:src="${product.thumbnail}" alt="Product">
                 <h3 th:text="${product.name}"></h3>
                 <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + 'VNĐ'}" style="color: #ffdd57;"></p>
                 <button>Add to Cart</button>
@@ -277,59 +480,58 @@
         <h2>Hot Deals</h2>
         <div class="products-grid">
             <div class="product" th:each="product : ${hotdeals}">
-                <img th:src="${product.thumbnail}" alt="Product8">
+                <img th:src="${product.thumbnail}" alt="Product">
                 <h3 th:text="${product.name}"></h3>
                 <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + '000 VNĐ'}" style="color: #ffdd57;"></p>
                 <button>Add to Cart</button>
             </div>
         </div>
-    </section>
-    <div class="products-box">
-        <div class="container" th:each="brand : ${brands}">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="title-all text-center">
-                        <h1 th:text="${brand.name}"></h1>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="special-menu text-center">
-                        <div class="button-group filter-button-group">
-                            <button class="active" data-filter="*">All</button>
-                            <button data-filter=".best-seller">Best seller</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row special-list">
-                <div class="col-lg-3 col-md-6 special-grid" th:each="product : ${products}"
-                     th:if="${brand.name == product.category.brand.name}">
-                    <form th:action="@{/add-to-cart}" method="post">
-                        <div class="products-single fix">
-                            <div class="box-img-hover">
-                                <img th:src="${product.thumbnail}" class="img-fluid" alt="Image">
-                                <div class="mask-icon">
-                                    <ul>
-                                        <li><a th:href="@{/product-detail/{id}(id = ${product.id})}" data-toggle="tooltip"
-                                               data-placement="right"
-                                               title="View"><i class="fas fa-eye"></i></a></li>
-                                    </ul>
-                                    <input type = "hidden" th:value = "${product.id}" name = "id" class = "form-control">
-                                    <input type="submit" class="btn hvr-hover" value="Add to cart">
-                                </div>
-                            </div>
-                            <div class="why-text">
-                                <h4 th:text="${product.name}"></h4>
-                                <h5 th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + '000 VNĐ'}"></h5>
-                            </div>
-                        </div>
-                    </form>
+    </section>  <div class="products-box">
+    <div class="container" th:each="brand : ${brands}">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-all text-center">
+                    <h1 th:text="${brand.name}"></h1>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="special-menu text-center">
+                    <div class="button-group filter-button-group">
+                        <button class="active" data-filter="*">All</button>
+                        <button data-filter=".best-seller">Best seller</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row special-list">
+            <div class="col-lg-3 col-md-6 special-grid" th:each="product : ${products}"
+                 th:if="${brand.name == product.category.brand.name}">
+                <form th:action="@{/add-to-cart}" method="post">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <img th:src="${product.thumbnail}" class="img-fluid" alt="Image">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a th:href="@{/product-detail/{id}(id = ${product.id})}" data-toggle="tooltip"
+                                           data-placement="right"
+                                           title="View"><i class="fas fa-eye"></i></a></li>
+                                </ul>
+                                <input type="hidden" th:value="${product.id}" name="id" class="form-control">
+                                <input type="submit" class="btn hvr-hover" value="Add to cart">
+                            </div>
+                        </div>
+                        <div class="why-text">
+                            <h4 th:text="${product.name}"></h4>
+                            <h5 th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + '000 VNĐ'}"></h5>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+</div>
 
     <table>
         <thead>
@@ -342,13 +544,13 @@
         </thead>
         <tbody>
         <tr th:each="product : ${products}">
-            <td th:src="${product.thumbnail}"></td>
+            <td><img th:src="${product.thumbnail}" alt="Product"></td>
             <td th:text="${product.name}"></td>
             <td th:text="${product.originalPrice}"></td>
             <td>
                 <form th:action="@{/cart/add-to-cart}" method="post" class="flex-grow-1 mr-3">
                     <input type="number" name="quantity" min="1" value="1" class="form-control d-inline-block" style="width: 70px;">
-                    <input type="hidden" th:value="${product.id}" name="productId" style="width: max-content"/>
+                    <input type="hidden" th:value="${product.id}" name="productId"/>
                     <button type="submit" class="btn btn-warning btn-sm">Add to cart</button>
                 </form>
             </td>
@@ -356,6 +558,6 @@
         </tbody>
     </table>
 </main>
-<th:block th:replace="~{layout::footer}"></th:block>
+
 </body>
 </html>

@@ -271,6 +271,12 @@
                         </div>
                     </div>
                     <form th:action="@{/login}" method="post">
+                        <div th:if="${param.error}" class="alert alert-danger animate__animated animate__shakeX">
+                            Tên đăng nhập hoặc mật khẩu không hợp lệ
+                        </div>
+                        <div th:if="${param.logout}" class="alert alert-success animate__animated animate__fadeIn">
+                            Bạn đã đăng xuất
+                        </div>
                         <div class="row gy-3 gy-md-4 overflow-hidden">
                             <div class="col-12">
                                 <label for="username" class="form-label">Username <span class="text-danger">*</span></label>

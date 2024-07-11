@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,11 +24,20 @@ public class OrderService {
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private CartService cartService;
+//    @Autowired
+//    private ProductService productService;
 
     @Transactional
-    public Order createOrder(String customerName, List<CartItem> cartItems) {
+    public Order createOrder(String customerName, String customerAddress, String customerPhone, String customerEmail, List<CartItem> cartItems) {
         Order order = new Order();
         order.setCustomerName(customerName);
+        order.setOrderDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        order.setCustomerEmail(customerEmail);
+        order.setCustomerPhone(customerPhone);
+        order.setCustomerAddress(customerAddress);
+        order.setTotalPrice(cartItems.stream().mapToDouble(item -> item.getProduct().getOriginalPrice()*1000*item.getQuantity()).sum());
+        order.setOrderStatus("Ordered");
+        order.setAccept(false);
         order = orderRepository.save(order);
         for (CartItem item : cartItems) {
             OrderDetail detail = new OrderDetail();
@@ -34,6 +45,9 @@ public class OrderService {
             detail.setProduct(item.getProduct());
             detail.setQuantity(item.getQuantity());
             orderDetailRepository.save(detail);
+
+//            Product product = productService.findById(item.getProduct().getId());
+//            product.setQuantityStock(product.getQuantityStock()-1);
         }
 
         cartService.clearCart();

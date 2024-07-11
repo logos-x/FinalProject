@@ -235,7 +235,11 @@
                 <img th:src="${product.thumbnail}" alt="Product8">
                 <h3 th:text="${product.name}"></h3>
                 <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + 'VNĐ'}" style="color: #ffdd57;"></p>
-                <button>Add to Cart</button>
+                <form th:action="@{/cart/add-to-cart}" method="post" class="flex-grow-1 mr-3">
+                    <input type="hidden" name="quantity" value="1" class="form-control d-inline-block" style="width: 70px;">
+                    <input type="hidden" th:value="${product.id}" name="id" style="width: max-content"/>
+                    <button type="submit" >Add to Cart</button>
+                </form>
             </div>
         </div>
 
@@ -244,8 +248,13 @@
             <div class="product" th:each="product : ${offices}">
                 <img th:src="${product.thumbnail}" alt="Product8">
                 <h3 th:text="${product.name}"></h3>
-                <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + 'VNĐ'}" style="color: #ffdd57;"></p>
-                <button>Add to Cart</button>
+                <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + ' 000VNĐ'}" style="color: #ffdd57;"></p>
+                <form th:action="@{/cart/add-to-cart}" method="post" class="flex-grow-1 mr-3">
+                    <input type="hidden" name="quantity" value="1" class="form-control d-inline-block" style="width: 70px;">
+                    <input type="hidden" th:value="${product.id}" name="id" style="width: max-content"/>
+                    <button type="submit" >Add to Cart</button>
+                </form>
+
             </div>
         </div>
     </section>
@@ -256,7 +265,11 @@
                 <img th:src="${product.thumbnail}" alt="Product8">
                 <h3 th:text="${product.name}"></h3>
                 <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + '000 VNĐ'}" style="color: #ffdd57;"></p>
-                <button>Add to Cart</button>
+                <form th:action="@{/cart/add-to-cart}" method="post" class="flex-grow-1 mr-3">
+                    <input type="hidden" name="quantity" value="1" class="form-control d-inline-block" style="width: 70px;">
+                    <input type="hidden" th:value="${product.id}" name="id" style="width: max-content"/>
+                    <button type="submit" >Add to Cart</button>
+                </form>
             </div>
         </div>
     </section>

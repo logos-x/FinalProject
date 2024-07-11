@@ -2,6 +2,7 @@ package com.example.EcommerceLaptopShop.controller.admin;
 
 import com.example.EcommerceLaptopShop.entity.Order;
 import com.example.EcommerceLaptopShop.entity.OrderDetail;
+import com.example.EcommerceLaptopShop.service.CartService;
 import com.example.EcommerceLaptopShop.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,7 @@ public class OrderController {
     public String getOrder(Model model) {
         List<Order> listOrders = orderService.getAll();
         model.addAttribute("orders", listOrders);
-        return "admin/order";
+        return "admin/order-list";
     }
 
     @GetMapping("/detail/{id}")

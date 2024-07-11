@@ -36,8 +36,8 @@ public class BrandService {
         return brandRepository.findAll();
     }
 
-    public Optional<Brand> findById(Long id) {
-        return brandRepository.findById(id);
+    public Brand findById(Long id) {
+        return brandRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Hãng có id: " + id + " không tồn tại."));
     }
 
     public void deleteById(Long id) {

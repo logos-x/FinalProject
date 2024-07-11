@@ -6,10 +6,29 @@
     <title>Title</title>
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <script th:fragment="link-fontawesome" src="https://kit.fontawesome.com/7994a6a9a6.js" crossorigin="anonymous"></script>
+    <style>
+        .dropdown {
+            position: relative;
+            margin-left: 1rem;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.6);
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            padding: 0.5rem 0;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
 <header th:fragment="header">
-    <nav class="navbar navbar-expand-lg bg-light navbar-light">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -20,17 +39,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
+                    <li>
+                        <a href="#">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black active" aria-current="page" href="/products">Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/admin/products/newProduct}" class="nav-link text-black">Add New Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/admin/categories/newBrand}" class="nav-link text-black">Add New Category</a>
+                    <li>
+                        <div class="dropdown">
+                            <a href="#">Shop</a>
+                            <div class="dropdown-content">
+                                <a href="#">All Products</a>
+                                <a href="#">Electronics</a>
+                                <a href="#">Clothing</a>
+                                <a href="#">Accessories</a>
+                            </div>
+                        </div>
                     </li>
                 </ul>
 

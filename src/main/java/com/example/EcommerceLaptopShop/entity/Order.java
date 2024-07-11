@@ -17,10 +17,10 @@ public class Order {
     private Date orderDate;
     private String orderStatus;
     private double totalPrice;
-    private double tax;
-    private int quantity;
-    private String paymentMethod;
     private String customerName;
+    private String customerPhone;
+    private String customerEmail;
+    private String customerAddress;
     private boolean isAccept;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
     private List<OrderDetail> orderDetailList;

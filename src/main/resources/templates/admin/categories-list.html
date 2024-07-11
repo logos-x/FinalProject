@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="~{layout::link-css}"></th:block>
+    <th:block th:replace="~{layout::link-fontawesome}"></th:block>
+</head>
+<body>
+<header th:fragment="header">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <button class="btn btn-outline-primary" type="submit">Đăng xuất</button>
+                        </form>
+                    </li>
+                    <li sec:authorize="!isAuthenticated()">
+                        <a href="/login" class="btn btn-outline-primary">Đăng nhập</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container mt-4">
+    <div class="col-12 mb-3">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="brand-tab" data-bs-toggle="tab" data-bs-target="#brand" type="button" role="tab" aria-controls="brand" aria-selected="true">Brand</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="category-tab" data-bs-toggle="tab" data-bs-target="#category" type="button" role="tab" aria-controls="category" aria-selected="false">Category</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade active show p-3" id="brand" role="tabpanel" aria-labelledby="brand-tab">
+                <div class="row">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5>Products</h5>
+                        <a th:href="@{categories/add-brand}" class="btn btn-primary">+ Add Brand</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Brand ID</th>
+                            <th scope="col">Brand Name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="brand : ${brands}">
+                            <th scope="row" th:text="${brand.id}"></th>
+                            <td th:text="${brand.name}"></td>
+                            <td>
+                                <a th:href="@{/admin/categories/edit-brand/{id}(id = ${brand.id})}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </a>
+                                <a th:if="${brand.deleted} == true" th:href="@{/admin/categories/enable-brand/{id}(id = ${brand.id})}"
+                                   class="btn btn-outline-success btn-sm">
+                                    <i class="fa-solid fa-trash-can-arrow-up"></i>
+                                </a>
+                                <a th:if="${brand.deleted} == false" th:href="@{/admin/categories/delete-brand/{id}(id = ${brand.id})}"
+                                   class="btn btn-outline-danger btn-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade p-3" id="category" role="tabpanel" aria-labelledby="category-tab">
+                <div class="row">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5>Products</h5>
+                        <a th:href="@{categories/add-category}" class="btn btn-primary">+ Add Category</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Category ID</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="category : ${categories}">
+                            <th scope="row" th:text="${category.id}"></th>
+                            <td th:text="${category.name}"></td>
+                            <td>
+                                <a th:href="@{/admin/categories/edit-category/{id}(id = ${category.id})}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </a>
+                                <a th:if="${category.deleted} == true" th:href="@{/admin/categories/enable-category/{id}(id = ${category.id})}"
+                                   class="btn btn-outline-success btn-sm">
+                                    <i class="fa-solid fa-trash-can-arrow-up"></i>
+                                </a>
+                                <a th:if="${category.deleted} == false" th:href="@{/admin/categories/delete-category/{id}(id = ${category.id})}"
+                                   class="btn btn-outline-danger btn-sm">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{layout::footer}"></th:block>
+</body>
+
+</html>

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,10 +28,6 @@ public class ProductService {
 
     public List<Product> findAll() {
         return productRepository.findAll();
-    }
-
-    public List<ProductDto> products() {
-        return transferData(productRepository.getAllProduct());
     }
 
     public List<Product> allProduct() {
@@ -46,22 +43,9 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-
-    public Product update(MultipartFile imageProduct, ProductDto productDto) {
-        try {
-            Product productUpdate = productRepository.getReferenceById(productDto.getId());
-            productUpdate.setCategory(productDto.getCategory());
-            productUpdate.setId(productUpdate.getId());
-            productUpdate.setName(productDto.getName());
-            productUpdate.setDescription(productDto.getDescription());
-            productUpdate.setOriginalPrice(productDto.getOriginalPrice());
-            productUpdate.setDiscountedPrice(productDto.getDiscountedPrice());
-            productUpdate.setQuantityStock(productDto.getQuantityStock());
-            return productRepository.save(productUpdate);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public void update(Product product, Configuration configuration) {
+        configurationRepository.save(configuration);
+        productRepository.save(product);
     }
 
     public void enableById(Long id) {
@@ -78,43 +62,14 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public ProductDto getById(Long id) {
-        ProductDto productDto = new ProductDto();
-        Product product = productRepository.getById(id);
-        productDto.setId(product.getId());
-        productDto.setName(product.getName());
-        productDto.setDescription(product.getDescription());
-        productDto.setOriginalPrice(product.getOriginalPrice());
-        productDto.setDiscountedPrice(product.getDiscountedPrice());
-        productDto.setQuantityStock(product.getQuantityStock());
-        productDto.setCategory(product.getCategory());
-        productDto.setThumbnail(product.getThumbnail());
-        productDto.setImages(new ArrayList<>(product.getImages()));
-        return productDto;
-    }
-
     public Product findById(Long id) {
-        return productRepository.findById(id).get();
+        return productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Sản phẩm có id: " + id + " không tồn tại."));
     }
 
     public List<Product> randomProduct() {
         return productRepository.randomProduct();
     }
 
-    public Page<ProductDto> searchProducts(int pageNo, String keyword) {
-        List<Product> products = productRepository.findAllByNameOrDescription(keyword);
-        List<ProductDto> productDtoList = transferData(products);
-        Pageable pageable = PageRequest.of(pageNo, 5);
-        Page<ProductDto> dtoPage = toPage(productDtoList, pageable);
-        return dtoPage;
-    }
-
-    public Page<Product> getAllProducts(int pageNo) {
-        Pageable pageable = PageRequest.of(pageNo, 6);
-        List<Product> productLists = this.allProduct();
-        Page<Product> productPage = toPage(productLists, pageable);
-        return productPage;
-    }
 
     private List<String> gamingLaptops = Arrays.asList("Acer Aspire 7", "Acer Nitro", "Asus ROG", "Asus TUF", "Dell Alienware", "Dell Gaming G15", "Lenovo IdeaPad Gaming",
             "Gigabyte G5", "Gigabyte Gaming AERO", "Gigabyte AORUS", "Gigabyte MF", "Lenovo Legion", "Lenovo LOG", "MSI Cyborg", "MSI Gaming Bravo", "MSI Gaming GF63", "MSI Katana");
@@ -133,65 +88,9 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-
-    public Page<ProductDto> getAllProductsForCustomer(int pageNo) {
-        return null;
+    public List<Product> searchProducts(String keyword) {
+        return productRepository.searchProducts(keyword);
     }
 
-    public List<ProductDto> findAllByCategory(String category) {
-        return transferData(productRepository.findAllByCategory(category));
-    }
-
-    public List<ProductDto> filterHighProducts() {
-        return transferData(productRepository.filterHighProducts());
-    }
-
-    public List<ProductDto> filterLowerProducts() {
-        return transferData(productRepository.filterLowerProducts());
-    }
-
-    public List<ProductDto> listViewProducts() {
-        return transferData(productRepository.listViewProduct());
-    }
-
-    public List<ProductDto> findByCategoryId(Long id) {
-        return transferData(productRepository.getProductByCategoryId(id));
-    }
-
-    public List<ProductDto> searchProducts(String keyword) {
-        return transferData(productRepository.searchProducts(keyword));
-    }
-
-    private Page toPage(List list, Pageable pageable) {
-        if (pageable.getOffset() >= list.size()) {
-            return Page.empty();
-        }
-        int startIndex = (int) pageable.getOffset();
-        int endIndex = ((pageable.getOffset() + pageable.getPageSize()) > list.size())
-                ? list.size()
-                : (int) (pageable.getOffset() + pageable.getPageSize());
-        List subList = list.subList(startIndex, endIndex);
-        return new PageImpl(subList, pageable, list.size());
-    }
-
-    private List<ProductDto> transferData(List<Product> products) {
-        List<ProductDto> productDtos = new ArrayList<>();
-        for (Product product : products) {
-            ProductDto productDto = new ProductDto();
-            productDto.setId(product.getId());
-            productDto.setName(product.getName());
-            productDto.setQuantityStock(product.getQuantityStock());
-            productDto.setOriginalPrice(product.getOriginalPrice());
-            productDto.setDiscountedPrice(product.getDiscountedPrice());
-            productDto.setDescription(product.getDescription());
-            productDto.setThumbnail(product.getThumbnail());
-            productDto.setImages(new ArrayList<>(product.getImages()));
-            productDto.setCategory(product.getCategory());
-            productDto.set_activated(product.is_activated());
-            productDto.set_deleted(product.is_deleted());
-            productDtos.add(productDto);
-        }
-        return productDtos;
-    }
 }
 

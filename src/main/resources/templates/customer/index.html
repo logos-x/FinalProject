@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vibrant Shop</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
     <style>
         body {
             background: linear-gradient(to right, #e0eafc, #cfdef3);
@@ -27,6 +28,7 @@
             position: relative;
             z-index: 1000;
         }
+
         header img {
             height: 40px;
             transition: transform 0.3s;
@@ -415,37 +417,7 @@
     </style>
 </head>
 <body>
-<header>
-
-    <nav>
-        <a href="#">Home</a>
-        <div class="dropdown">
-            <a href="#">Shop</a>
-            <div class="dropdown-content">
-                <a href="#">All Products</a>
-                <a href="#">Electronics</a>
-                <a href="/admin/products/newProduct">Clothing</a>
-                <a href="#">Accessories</a>
-            </div>
-        </div>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-    </nav>
-    <div class="search-container">
-        <input type="text" placeholder="Search...">
-        <button>Search</button>
-
-        <div class="login-container">
-            <a class="nav-link active" href="/cart">
-                <i class="fa-solid fa-cart-shopping fa-2x"></i>
-            </a>
-            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-                <button class="btn btn-outline-primary" type="submit">Đăng xuất</button>
-            </form>
-            <a href="/login" class="btn btn-outline-primary" sec:authorize="!isAuthenticated()">Đăng nhập</a>
-        </div>
-    </div>
-</header>
+<th:block th:replace="~{layout::header}"></th:block>
 <main>
 
     <section class="hero-section" style="background-image: url('/images/back.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
@@ -462,7 +434,11 @@
                 <img th:src="${product.thumbnail}" alt="Product">
                 <h3 th:text="${product.name}"></h3>
                 <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + 'VNĐ'}" style="color: #ffdd57;"></p>
-                <button>Add to Cart</button>
+                <form th:action="@{/cart/add-to-cart}" method="post" class="flex-grow-1 mr-3">
+                    <input type="hidden" name="quantity" value="1" class="form-control d-inline-block" style="width: 70px;">
+                    <input type="hidden" th:value="${product.id}" name="id" style="width: max-content"/>
+                    <button type="submit" >Add to Cart</button>
+                </form>
             </div>
         </div>
 
@@ -471,8 +447,13 @@
             <div class="product" th:each="product : ${offices}">
                 <img th:src="${product.thumbnail}" alt="Product">
                 <h3 th:text="${product.name}"></h3>
-                <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + 'VNĐ'}" style="color: #ffdd57;"></p>
-                <button>Add to Cart</button>
+                <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + ' 000VNĐ'}" style="color: #ffdd57;"></p>
+                <form th:action="@{/cart/add-to-cart}" method="post" class="flex-grow-1 mr-3">
+                    <input type="hidden" name="quantity" value="1" class="form-control d-inline-block" style="width: 70px;">
+                    <input type="hidden" th:value="${product.id}" name="id" style="width: max-content"/>
+                    <button type="submit" >Add to Cart</button>
+                </form>
+
             </div>
         </div>
     </section>
@@ -483,7 +464,11 @@
                 <img th:src="${product.thumbnail}" alt="Product">
                 <h3 th:text="${product.name}"></h3>
                 <p th:text="${#numbers.formatDecimal(product.originalPrice, 0, 0) + '000 VNĐ'}" style="color: #ffdd57;"></p>
-                <button>Add to Cart</button>
+                <form th:action="@{/cart/add-to-cart}" method="post" class="flex-grow-1 mr-3">
+                    <input type="hidden" name="quantity" value="1" class="form-control d-inline-block" style="width: 70px;">
+                    <input type="hidden" th:value="${product.id}" name="id" style="width: max-content"/>
+                    <button type="submit" >Add to Cart</button>
+                </form>
             </div>
         </div>
     </section>  <div class="products-box">

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thêm danh mục mới</title>
-    <th:block th:replace="layout::link-css"></th:block>
+    <th:block th:replace="~{layout::link-css}"></th:block>
     <style>
 
         .floating-circles {
@@ -119,7 +119,6 @@
             border-color: #007bff;
         }
         .card{
-            margin-top: 100px;
             border-radius: 20px;
         }
         .btn-primar {
@@ -190,11 +189,19 @@
     <div class="card">
         <div class="card-body">
             <h1 class="card-title">Thêm danh mục mới</h1>
-            <form th:action="@{/admin/categories/add-brand}" th:object="${brand}" method="post">
-                <div class="form-group">
+            <form th:action="@{/admin/categories/add-category}" th:object="${category}" method="post">
+                <div class="col-6 mb-3">
                     <label class="form-label" for="name">Tên danh mục:</label>
                     <input class="form-control" type="text" th:field="*{name}" id="name">
                     <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                </div>
+                <div class="col-6 mb-3">
+                    <label class="form-label" for="category">Brand:</label>
+                    <select class="form-control" id="category" th:field="*{brand.id}">
+                        <option value="">-- Chọn Hãng --</option>
+                        <option th:each="brand : ${brands}" th:value="${brand.id}"
+                                th:text="${brand.name}"></option>
+                    </select>
                 </div>
                 <div class="form-group d-flex justify-content-center">
                     <button type="submit" class="btn btn-primar">Submit</button>

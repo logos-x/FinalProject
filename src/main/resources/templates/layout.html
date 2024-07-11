@@ -7,28 +7,70 @@
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <script th:fragment="link-fontawesome" src="https://kit.fontawesome.com/7994a6a9a6.js" crossorigin="anonymous"></script>
     <style>
-        .dropdown {
-            position: relative;
-            margin-left: 1rem;
+        .navbar {
+            background-color: #ffffff;
+            padding: 1rem;
         }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.6);
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            top: 100%;
-            left: 0;
-            padding: 0.5rem 0;
-            border-radius: 8px;
+        .navbar-brand, .nav-link {
+            color: #ffffff;
         }
+
+        .nav-link:hover {
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        .dropdown-menu {
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
+        }
+
+        .dropdown-item {
+            color: #ffffff;
+        }
+
+        .dropdown-item:hover {
+            background-color: #007bff;
+            color: #ffffff;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar input[type="search"] {
+            height: 40px;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #007bff;
+            margin-right: 10px;
+
+        }
+
+        .search-bar button {
+            width: 150px;
+            height: 40px;
+            border-radius: 15px;
+            margin-right: 500px;
+        }
+
+        .btn-outline-primary {
+            border-radius: 15px;
+        }
+
+        .fa-cart-shopping {
+            color: #ffffff;
+        }
+
+        .fa-cart-shopping:hover {
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
     </style>
 </head>
 <body>
 <header th:fragment="header">
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg" style="background-color: #ffffff;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -39,38 +81,38 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li>
-                        <a href="#">Home</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
                     </li>
-                    <li>
-                        <div class="dropdown">
-                            <a href="#">Shop</a>
-                            <div class="dropdown-content">
-                                <a href="#">All Products</a>
-                                <a href="#">Electronics</a>
-                                <a href="#">Clothing</a>
-                                <a href="#">Accessories</a>
-                            </div>
-                        </div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Shop
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">All Products</a></li>
+                            <li><a class="dropdown-item" href="#">Electronics</a></li>
+                            <li><a class="dropdown-item" href="#">Clothing</a></li>
+                            <li><a class="dropdown-item" href="#">Accessories</a></li>
+                        </ul>
                     </li>
                 </ul>
 
-                <form class="search-bar" action="/search" method="get" style="display: flex; align-items: center;">
-                    <input type="text" name="query" placeholder="Search..." size="80" style="height: 40px; padding: 10px; border-radius: 15px; border: 1px solid #007bff; margin-right: 10px;">
-                    <button class="btn btn-success" style="width :150px; height: 40px; border-radius: 15px;margin-right: 500px">Search</button>
+                <form class="search-bar d-flex align-items-center" action="/search" method="get">
+                    <input class="form-control me-2 rounded-pill" type="search" name="query" placeholder="Search..." size="80" aria-label="Search">
+                    <button class="btn btn-success rounded-pill" type="submit">Search</button>
                 </form>
 
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-                    <li>
+                    <li class="nav-item">
                         <a class="nav-link active" href="/cart">
                             <i class="fa-solid fa-cart-shopping fa-2x"></i></a>
                     </li>
-                    <li sec:authorize="isAuthenticated()">
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <form th:action="@{/logout}" method="post">
                             <button class="btn btn-outline-primary" type="submit">Đăng xuất</button>
                         </form>
                     </li>
-                    <li sec:authorize="!isAuthenticated()">
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
                         <a href="/login" class="btn btn-outline-primary">Đăng nhập</a>
                     </li>
                 </ul>
